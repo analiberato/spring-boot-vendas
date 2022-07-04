@@ -1,2 +1,4 @@
 # spring-boot-vendas
-Primeira versão 28/06/2022
+Back end para sistema de vendas (Clientes, Produtos, Pedidos, Itens) utilizando Spring Boot.
+
+
