@@ -1,7 +1,5 @@
 package com.wmw.treinamento.projetovendas.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,12 +16,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cliente implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idCliente;
+	private Long id;
 	private String nome;
 	@Enumerated(EnumType.STRING)
 	private TipoPessoa tipoPessoa;
@@ -32,7 +28,7 @@ public class Cliente implements Serializable {
 	private String email;
 
 	public Cliente(ClienteDTO clienteDto) {
-		this.idCliente = clienteDto.getIdCliente();
+		this.id = clienteDto.getId();
 		this.nome = clienteDto.getNome();
 		this.tipoPessoa = clienteDto.getTipoPessoa();
 		this.cpf_cnpj = clienteDto.getCpf_cnpj();

@@ -5,17 +5,21 @@ import java.util.stream.Collectors;
 
 import com.wmw.treinamento.projetovendas.model.Produto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProdutoDTO {
 
-	private Long idProduto;
+	private Long id;
 	private String nome;
 	private Double preco;
 
 	public ProdutoDTO(Produto produto) {
-		this.idProduto = produto.getIdProduto();
+		this.id = produto.getId();
 		this.nome = produto.getNome();
 		this.preco = produto.getPreco();
 	}

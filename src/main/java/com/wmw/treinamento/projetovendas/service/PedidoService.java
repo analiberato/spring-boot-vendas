@@ -1,54 +1,137 @@
 package com.wmw.treinamento.projetovendas.service;
 
+import com.wmw.treinamento.projetovendas.dto.ItemPedidoDTO;
 import com.wmw.treinamento.projetovendas.dto.PedidoDTO;
+import com.wmw.treinamento.projetovendas.dto.PedidoUpdateDTO;
+import com.wmw.treinamento.projetovendas.model.Cliente;
+import com.wmw.treinamento.projetovendas.model.ItemPedido;
 import com.wmw.treinamento.projetovendas.model.Pedido;
+import com.wmw.treinamento.projetovendas.model.Produto;
+import com.wmw.treinamento.projetovendas.repository.ClienteRepository;
+import com.wmw.treinamento.projetovendas.repository.ItemPedidoRepository;
 import com.wmw.treinamento.projetovendas.repository.PedidoRepository;
+import com.wmw.treinamento.projetovendas.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class PedidoService {
 
     @Autowired
     PedidoRepository pedidoRepository;
+
+    @Autowired
+    ItemPedidoRepository itemRepository;
+
+    @Autowired
+    ClienteRepository clienteRepository;
+
+    @Autowired
+    ProdutoRepository produtoRepository;
 
     public List<PedidoDTO> lista() {
         List<Pedido> pedidos = pedidoRepository.findAll();
         return PedidoDTO.converter(pedidos);
     }
 
-    public PedidoDTO cadastrar(PedidoDTO pedidoDTO) {
-        Pedido pedido = new Pedido(pedidoDTO);
-        pedidoRepository.save(pedido);
-        return new PedidoDTO(pedido);
-    }
-
-    public PedidoDTO detalhar(@PathVariable Long id) {
+    public PedidoDTO detalhar(@PathVariable Long id) throws Exception {
         Optional<Pedido> pedido = pedidoRepository.findById(id);
         if (pedido.isPresent()) {
-            return new PedidoDto(pedido.get());
-        } else {
-            //new Exception()
-        }
-    }
-
-    public PedidoDTO atualizar(@PathVariable Long id, PedidoDTO pedidoDto) {
-        Optional<Pedido> pedido = pedidoRepository.findById(id);
-        //PedidoDTO pedidoDTO;
-        if (pedido.isPresent()) {
-            //pedido.get().setDataEntrega(pedidoDto.getDataEntrega());
-            //pedido.get().setTotalPedido(pedidoDto.getTotalPedido());
-            //pedido.get().setStatus(pedidoDto.getStatus());
-            //pedido.get().setItens(pedidoDto.getItens());
             return new PedidoDTO(pedido.get());
         } else {
-            //new Exception()
+            throw new Exception();
+        }
+    }
+
+    public PedidoDTO cadastrar(PedidoDTO pedidoDTO) throws Exception {
+
+        Optional<Pedido> pedidoOptional = pedidoRepository.findById(pedidoDTO.getId());
+        if (pedidoOptional.isPresent()) {
+            throw new Exception();
         }
 
+        Pedido pedido = new Pedido();
+
+        pedido.setId(pedidoDTO.getId());
+        pedido.setTotalPedido(pedidoDTO.getTotalPedido());
+        pedido.setDataEmissao(pedidoDTO.getDataEmissao());
+        pedido.setDataEntrega(pedidoDTO.getDataEntrega());
+        pedido.setStatus(pedidoDTO.getStatus());
+
+        Optional<Cliente> cliente = clienteRepository.findById(pedidoDTO.getIdCliente());
+        if (cliente.isPresent()) {
+            pedido.setCliente(cliente.get());
+        } else {
+            throw new Exception();
+        }
+
+        pedidoDTO.getItens().stream().forEach(item -> {
+            try {
+                newItemPedido(item, pedido);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        pedidoRepository.save(pedido);
+        pedidoDTO = new PedidoDTO(pedido);
+        return pedidoDTO;
+    }
+
+    private void newItemPedido(ItemPedidoDTO itemPedidoDTO, Pedido pedido) throws Exception {
+        ItemPedido itemPedido = new ItemPedido();
+        itemPedido.setId(itemPedidoDTO.getId());
+        itemPedido.setTotalItem(itemPedidoDTO.getTotalItem());
+        itemPedido.setDesconto(itemPedidoDTO.getDesconto());
+        itemPedido.setPrecoUnitario(itemPedidoDTO.getPrecoUnitario());
+        itemPedido.setQuantidade(itemPedidoDTO.getQuantidade());
+
+        itemPedido.setPedido(pedido);
+
+        Optional<Produto> produto = produtoRepository.findById(itemPedidoDTO.getIdProduto());
+        if (produto.isPresent()) {
+            itemPedido.setProduto(produto.get());
+        } else {
+            throw new Exception();
+        }
+
+        pedido.getItens().add(itemPedido);
+    }
+
+    public PedidoUpdateDTO atualizar(PedidoUpdateDTO pedidoUpdateDTO) throws Exception {
+
+        Optional<Pedido> pedidoOptional = pedidoRepository.findById(pedidoUpdateDTO.getId());
+        if (!pedidoOptional.isPresent()) {
+            throw new Exception();
+        }
+
+        Pedido pedido = pedidoOptional.get();
+
+        pedido.setId(pedidoUpdateDTO.getId());
+        pedido.setTotalPedido(pedidoUpdateDTO.getTotalPedido());
+        pedido.setDataEntrega(pedidoUpdateDTO.getDataEntrega());
+        pedido.setStatus(pedidoUpdateDTO.getStatus());
+
+
+        pedidoUpdateDTO.getItens().stream().forEach(item -> {
+            Optional<ItemPedido> itemOptional = itemRepository.findById(item.getId());
+            if (!itemOptional.isPresent()) {
+                try {
+                    newItemPedido(item, pedido);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        pedidoRepository.save(pedido);
+        pedidoUpdateDTO = new PedidoUpdateDTO(pedido);
+        return pedidoUpdateDTO;
     }
 
     public ResponseEntity<?> deletar(@PathVariable Long id) {

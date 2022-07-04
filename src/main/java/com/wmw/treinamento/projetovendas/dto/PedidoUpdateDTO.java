@@ -3,7 +3,9 @@ package com.wmw.treinamento.projetovendas.dto;
 import com.wmw.treinamento.projetovendas.model.Pedido;
 import com.wmw.treinamento.projetovendas.model.StatusPedido;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,26 +13,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class PedidoFORM {
+@AllArgsConstructor
+@NoArgsConstructor
+public class PedidoUpdateDTO {
 
-	private Long idPedido;
+	private Long id;
 	private LocalDate dataEntrega;
 	@Positive
 	private Double totalPedido;
 	private StatusPedido status;
-	private List<ItemPedidoDTO> itens;
+	private List<ItemPedidoDTO> itens = new ArrayList<>();
 
-	public PedidoFORM(Pedido pedido) {
-		this.idPedido = pedido.getIdPedido();
+	public static List<PedidoUpdateDTO> converter(List<Pedido> pedido) {
+		return pedido.stream().map(PedidoUpdateDTO::new).collect(Collectors.toList());
+	}
+
+	public PedidoUpdateDTO(Pedido pedido) {
+		this.id = pedido.getId();
 		this.dataEntrega = pedido.getDataEntrega();
 		this.totalPedido = pedido.getTotalPedido();
 		this.status = pedido.getStatus();
-		//this.itens = new ArrayList<>();
-		//this.itens.addAll(pedido.getItens().stream().map(ItemPedidoDTO::new).collect(Collectors.toList()));
-	}
-
-	public static List<PedidoFORM> converter(List<Pedido> pedido) {
-		return pedido.stream().map(PedidoFORM::new).collect(Collectors.toList());
+		this.itens.addAll(pedido.getItens().stream().map(ItemPedidoDTO::new).collect(Collectors.toList()));
 	}
 
 }

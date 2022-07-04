@@ -9,10 +9,4 @@ import com.wmw.treinamento.projetovendas.model.ItemPedido;
 
 public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Long> {
 
-	Optional<ItemPedido> findById(Long id);
-
-	ItemPedido findByIdItemPedido(Long idItemPedido);
-
-	List<ItemPedido> findAll();
-
 }

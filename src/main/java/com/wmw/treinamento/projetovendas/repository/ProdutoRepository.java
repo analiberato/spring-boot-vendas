@@ -9,5 +9,4 @@ import com.wmw.treinamento.projetovendas.model.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
-	List<Cliente> findByNome(String nome);
 }

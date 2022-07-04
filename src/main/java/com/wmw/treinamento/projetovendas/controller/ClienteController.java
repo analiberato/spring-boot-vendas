@@ -30,7 +30,7 @@ public class ClienteController {
 
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ClienteDTO> detalhar(@PathVariable Long id) {
+	public ResponseEntity<ClienteDTO> detalhar(@PathVariable Long id) throws Exception {
 		return ResponseEntity.ok(clienteService.detalhar(id));
 	}
 

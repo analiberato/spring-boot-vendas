@@ -29,7 +29,7 @@ public class ProdutoController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ProdutoDTO> detalhar(@PathVariable Long id) {
+	public ResponseEntity<ProdutoDTO> detalhar(@PathVariable Long id) throws Exception {
 		return ResponseEntity.ok(produtoService.detalhar(id));
 	}
 

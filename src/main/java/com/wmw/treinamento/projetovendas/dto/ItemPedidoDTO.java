@@ -1,25 +1,23 @@
 package com.wmw.treinamento.projetovendas.dto;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.wmw.treinamento.projetovendas.model.ItemPedido;
-import com.wmw.treinamento.projetovendas.model.Pedido;
-import com.wmw.treinamento.projetovendas.model.Produto;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemPedidoDTO {
 
-	private Long idItemPedido;
-	private ProdutoDTO produtoDTO;
+	private Long id;
+	@NotBlank
+	private Long idProduto;
 	@NotBlank
 	@Positive
 	private Integer quantidade;
@@ -27,16 +25,16 @@ public class ItemPedidoDTO {
 	private Double desconto;
 	private Double totalItem;
 
-	public ItemPedidoDTO(ItemPedido item) {
-		this.produtoDTO = new ProdutoDTO(item.getProduto());
-		this.quantidade = item.getQuantidade();
-		this.precoUnitario = item.getPrecoUnitario();
-		this.desconto = item.getDesconto();
-		this.totalItem = item.getTotalItem();
+	public ItemPedidoDTO(ItemPedido itemPedido) {
+		this.id = itemPedido.getId();
+		this.idProduto = itemPedido.getProduto().getId();
+		this.quantidade = itemPedido.getQuantidade();
+		this.precoUnitario = itemPedido.getPrecoUnitario();
+		this.desconto = itemPedido.getDesconto();
+		this.totalItem = itemPedido.getTotalItem();
 	}
 
 	public static List<ItemPedidoDTO> converter(List<ItemPedido> itens) {
 		return itens.stream().map(ItemPedidoDTO::new).collect(Collectors.toList());
 	}
-
 }

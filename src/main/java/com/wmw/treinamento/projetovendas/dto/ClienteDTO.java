@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import javax.validation.constraints.Email;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -16,9 +18,11 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClienteDTO {
 
-	private Long idCliente;
+	private Long id;
 
 	@NotBlank(message = "Por favor insira seu nome")
 	private String nome;
@@ -40,7 +44,7 @@ public class ClienteDTO {
 	private String email;
 
 	public ClienteDTO(Cliente cliente) {
-		this.idCliente = cliente.getIdCliente();
+		this.id = cliente.getId();
 		this.nome = cliente.getNome();
 		this.tipoPessoa = cliente.getTipoPessoa();
 		this.cpf_cnpj = cliente.getCpf_cnpj();

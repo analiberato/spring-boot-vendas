@@ -6,11 +6,13 @@ import com.wmw.treinamento.projetovendas.model.Cliente;
 import com.wmw.treinamento.projetovendas.model.Pedido;
 import com.wmw.treinamento.projetovendas.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ClienteService {
 
 	@Autowired
@@ -21,12 +23,12 @@ public class ClienteService {
 		return ClienteDTO.converter(clientes);
 	}
 
-	public ClienteDTO detalhar(@PathVariable Long id) {
+	public ClienteDTO detalhar(@PathVariable Long id) throws Exception {
 		Optional<Cliente> cliente = clienteRepository.findById(id);
 		if (cliente.isPresent()) {
 			return new ClienteDTO(cliente.get());
 		} else {
-			//new Exception()
+			throw new Exception();
 		}
 	}
 }

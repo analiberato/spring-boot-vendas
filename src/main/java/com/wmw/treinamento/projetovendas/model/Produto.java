@@ -1,13 +1,14 @@
 package com.wmw.treinamento.projetovendas.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+import com.wmw.treinamento.projetovendas.dto.ProdutoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,13 +18,17 @@ public class Produto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idProduto;
+	private Long id;
 	private String nome;
 	private Double preco;
 
-    public Produto(Produto produtoDTO) {
-    	this.idProduto = produtoDTO.getIdProduto();
+	@OneToMany(mappedBy = "produto")
+	private List<ItemPedido> itens = new ArrayList<>();
+
+	public Produto(ProdutoDTO produtoDTO) {
+    	this.id = produtoDTO.getId();
     	this.nome = produtoDTO.getNome();
     	this.preco = produtoDTO.getPreco();
     }
+
 }

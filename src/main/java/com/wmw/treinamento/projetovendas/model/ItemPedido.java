@@ -1,34 +1,39 @@
 package com.wmw.treinamento.projetovendas.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemPedido {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idItemPedido;
+	private Long id;
+
+	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "idProduto")
+	@JoinColumn(name = "id_produto", referencedColumnName = "id")
 	private Produto produto;
+
+	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "idPedido")
+	@JoinColumn(name = "id_pedido", referencedColumnName = "id")
 	private Pedido pedido;
+
 	private Integer quantidade;
+
 	private Double precoUnitario;
+
 	private Double desconto;
+
 	private Double totalItem;
 
 }
