@@ -1,9 +1,12 @@
 package com.wmw.treinamento.projeto.controller;
 
 import com.wmw.treinamento.projetovendas.ProjetoApplication;
+import com.wmw.treinamento.projetovendas.repository.PedidoRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -21,12 +24,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
 @ContextConfiguration(classes = ProjetoApplication.class)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ActiveProfiles("test")
 public class PedidoTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+//    @Autowired
+//    private PedidoRepository pedidoRepository;
+
+//    @Autowired
+//    private TestEntityManager entityManager;
 
     @Test
     public void deveriaDevolver200CasoDadosSejamPersistidosCorretamentePost() throws Exception {
@@ -52,7 +62,7 @@ public class PedidoTest {
     public void deveriaDevolver200CasoDadosSejamPersistidosCorretamentePut() throws Exception {
         URI uri = new URI("/pedidos/");
 
-        String json = "{\"id\":\"3\",\"dataEntrega\":\"2022-06-07\",\"" +
+        String json = "{\"id\":\"2\",\"dataEntrega\":\"2022-06-07\",\"" +
                 "totalPedido\":\"63.9\",\"status\":\"FECHADO\",\"itens\":[{\"id\":\"4\",\"idProduto\":\"2\",\"" +
                 "quantidade\":\"2\",\"precoUnitario\":\"19.9\",\"desconto\":\"0.0\",\"totalItem\":\"38.8\"}]}";
 
