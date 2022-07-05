@@ -32,12 +32,6 @@ public class PedidoTest {
     @Autowired
     private MockMvc mockMvc;
 
-//    @Autowired
-//    private PedidoRepository pedidoRepository;
-
-//    @Autowired
-//    private TestEntityManager entityManager;
-
     @Test
     public void deveriaDevolver200CasoDadosSejamPersistidosCorretamentePost() throws Exception {
         URI uri = new URI("/pedidos");
