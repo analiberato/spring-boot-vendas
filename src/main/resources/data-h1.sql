@@ -22,7 +22,6 @@ VALUES ('6', 'Shampoo Elseve Intenso', 39.90);
 
 INSERT INTO PEDIDO (id, id_cliente, data_emissao, data_entrega, total_pedido, status)
 VALUES ('1', 1, DATE'2022-05-07', DATE'2022-05-07', 97.84, 'RASCUNHO');
---VALUES ('1', 1, CURRENT_DATE(), DATEADD(DD,4,CURRENT_DATE())), 97.84, 'RASCUNHO');
 
 INSERT INTO ITEM_PEDIDO (id, id_pedido, id_produto, quantidade, preco_unitario, desconto, total_item)
 VALUES ('1', 1, 1, 3, 22.00, 0, 66.00);

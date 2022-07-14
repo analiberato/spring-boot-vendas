@@ -1,16 +1,14 @@
 package com.wmw.treinamento.projeto.controller;
 
 import com.wmw.treinamento.projetovendas.ProjetoApplication;
-import com.wmw.treinamento.projetovendas.repository.PedidoRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,15 +17,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.net.URI;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = ProjetoApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ActiveProfiles("test")
-public class PedidoTest {
+@Profile("test")
+public class PedidoAPI {
 
     @Autowired
     private MockMvc mockMvc;

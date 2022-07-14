@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - 1433:1433
+    networks:
+      - vendas_net
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Wmwcli123!
+    build:
+      context: "./"
+      dockerfile: "Dockerfile-mssql"
+
+  springboot-app:
+    container_name: spring-vendas-container
+    image: springbooot-app
+    ports:
+      - "8080:8080"
+    networks:
+      - vendas_net
+    depends_on:
+      - "mssql"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://mssql:1433;databaseName=PROJETOTREINAMENTO7
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: Wmwcli123!
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      SPRING_JPA_HIBERNATE_DDLAUTO: update
+      SPRING_JPA_HIBERNATE_DIALECT: org.hibernate.dialect.SQLServer2008Dialect
+    build:
+      context: "./"
+      dockerfile: "Dockerfile"
+
+networks:
+  vendas_net:
+    driver: bridge
