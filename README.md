@@ -1,4 +1,4 @@
-# Back End para aplicação de vendas
+# Back End para aplicação de vendas com Spring Boot
 Esse projeto foi feito com o objetivo de ser um Back End para uma aplicação de vendas com clientes, produtos e pedidos. Foi utilizado Java e Spring Boot, com Maven como gerenciador de dependências e SQL Server para o banco de dados.
 
 ## Estrutura e execução do projeto
