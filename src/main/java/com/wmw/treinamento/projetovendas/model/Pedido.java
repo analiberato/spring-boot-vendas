@@ -23,7 +23,6 @@ import lombok.ToString;
 public class Pedido {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY) Isso o total cross vai fazer, bjs <3
 	private Long id;
 
 	@ManyToOne

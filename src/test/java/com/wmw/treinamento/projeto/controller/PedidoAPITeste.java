@@ -23,7 +23,7 @@ import java.net.URI;
 @ContextConfiguration(classes = ProjetoApplication.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Profile("test")
-public class PedidoAPI {
+public class PedidoAPITeste {
 
     @Autowired
     private MockMvc mockMvc;

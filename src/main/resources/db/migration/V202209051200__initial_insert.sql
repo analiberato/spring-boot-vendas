@@ -1,0 +1,11 @@
+INSERT INTO dbo.CLIENTE (id, nome, tipo_pessoa, cpf_cnpj, telefone, email) VALUES ('1', 'Ana', 'FISICA', '000.000.000-01', '48984663454', 'ana@wmw.com.br')
+INSERT INTO dbo.CLIENTE (id, nome, tipo_pessoa, cpf_cnpj, telefone, email) VALUES ('2', 'Cesar', 'FISICA', '000.000.000-02', '48984663454', 'cesar@wmw.com.br')
+INSERT INTO dbo.CLIENTE (id, nome, tipo_pessoa, cpf_cnpj, telefone, email) VALUES ('3', 'Lucas', 'FISICA', '000.000.000-03', '48984663454', 'lucas@wmw.com.br')
+INSERT INTO dbo.CLIENTE (id, nome, tipo_pessoa, cpf_cnpj, telefone, email) VALUES ('4', 'WMW SYSTEMS', 'JURIDICA', '000.000.000-04', '48984663454','contato@wmw.com.br')
+
+INSERT INTO dbo.PRODUTO (id, nome, preco) VALUES ('1', 'Nivea Noturno', 22.0)
+INSERT INTO dbo.PRODUTO (id, nome, preco) VALUES ('2', 'Else Hidratação Noturna', 19.90)
+INSERT INTO dbo.PRODUTO (id, nome, preco) VALUES ('3', 'Perfume Shakira', 89.90)
+INSERT INTO dbo.PRODUTO (id, nome, preco) VALUES ('4', 'Creme HidraMais', 19.90)
+INSERT INTO dbo.PRODUTO (id, nome, preco) VALUES ('5', 'LipChilli FR', 35.90)
+INSERT INTO dbo.PRODUTO (id, nome, preco) VALUES ('6', 'Shampoo Elseve Intenso', 39.90)

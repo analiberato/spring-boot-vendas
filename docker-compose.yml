@@ -33,7 +33,6 @@ services:
     build:
       context: "./"
       dockerfile: "Dockerfile"
-
 networks:
   vendas_net:
     driver: bridge

@@ -33,7 +33,8 @@ public class PedidoController {
 	}
 
 	@PostMapping
-	public ResponseEntity<PedidoDTO> cadastrar(@RequestBody @Valid PedidoDTO pedidoDTO, UriComponentsBuilder uriBuilder) throws Exception {
+	public ResponseEntity<PedidoDTO> cadastrar(@RequestBody(required = false) @Valid PedidoDTO pedidoDTO, UriComponentsBuilder uriBuilder) throws Exception {
+		System.out.println(pedidoDTO);
 		return ResponseEntity.ok(pedidoService.cadastrar(pedidoDTO));
 	}
 

@@ -48,11 +48,23 @@ public class PedidoService {
         }
     }
 
+    public Double calcularTotalDoPedido(PedidoDTO pedidoDTO){
+        return pedidoDTO.getItens().stream().mapToDouble(itemPedidoDTO -> itemPedidoDTO.getTotalItem()).sum();
+    }
+
+    public Double calcularDesconto(ItemPedidoDTO itemPedidoDTO){
+        return ((100 - itemPedidoDTO.getDesconto()) * 0.01) * produtoRepository.getReferenceById(itemPedidoDTO.getIdProduto()).getPreco();
+    }
+
     public PedidoDTO cadastrar(PedidoDTO pedidoDTO) throws Exception {
+
+        if (calcularTotalDoPedido(pedidoDTO) != pedidoDTO.getTotalPedido()){
+            throw new Exception();
+        }
 
         Optional<Pedido> pedidoOptional = pedidoRepository.findById(pedidoDTO.getId());
         if (pedidoOptional.isPresent()) {
-            throw new Exception();
+            pedidoRepository.delete(pedidoOptional.get());
         }
 
         Pedido pedido = new Pedido();
@@ -72,7 +84,12 @@ public class PedidoService {
 
         pedidoDTO.getItens().stream().forEach(item -> {
             try {
-                newItemPedido(item, pedido);
+                if (calcularDesconto(item) != item.getTotalItem()){
+
+                    throw new Exception();
+                } else {
+                    newItemPedido(item, pedido);
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -80,7 +97,7 @@ public class PedidoService {
 
         pedidoRepository.save(pedido);
         pedidoDTO = new PedidoDTO(pedido);
-        return pedidoDTO;
+         return pedidoDTO;
     }
 
     private void newItemPedido(ItemPedidoDTO itemPedidoDTO, Pedido pedido) throws Exception {

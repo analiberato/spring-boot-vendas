@@ -28,7 +28,7 @@ public class ItemPedido {
 	@JoinColumn(name = "id_pedido", referencedColumnName = "id")
 	private Pedido pedido;
 
-	private Integer quantidade;
+	private Double quantidade;
 
 	private Double precoUnitario;
 

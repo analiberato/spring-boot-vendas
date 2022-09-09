@@ -20,7 +20,7 @@ public class ItemPedidoDTO {
 	private Long idProduto;
 	@NotBlank
 	@Positive
-	private Integer quantidade;
+	private Double quantidade;
 	private Double precoUnitario;
 	private Double desconto;
 	private Double totalItem;
